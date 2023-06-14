@@ -17,7 +17,7 @@ import (
 
 func main() {
 	ctx := context.Background()
-	os.Setenv("DB_CONN", "postgresql://postgres:postgres@localhost:5432/transaction_test_case?sslmode=disable")
+	//os.Setenv("DB_CONN", "postgresql://postgres:postgres@localhost:5432/transaction_test_case?sslmode=disable")
 	connString := os.Getenv("DB_CONN")
 
 	postgresDB := postgres.InitPostgres(ctx, connString)

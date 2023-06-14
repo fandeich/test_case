@@ -7,33 +7,21 @@
 Для запуска приложения и базы данных выполните следующие шаги:
 
 1. Установите Docker и Docker Compose.
-2. Создайте файл `docker-compose.yml` со следующим содержимым:
 
-[source,yaml]
-----
-include::docker-compose.yml[]
-----
+2. Запустите контейнеры Docker с помощью команды `docker-compose up`.
 
-3. Запустите контейнеры Docker с помощью команды `docker-compose up -d`.
+3. Установите переменную окружения DB_CONN со значением postgresql://postgres:postgres@localhost:5432/transaction_test_case?sslmode=disable
 
-4. Подключитесь к базе данных PostgreSQL с помощью следующих параметров:
-
-- Хост: `localhost`
-- Порт: `5432`
-- Имя пользователя: `postgres`
-- Пароль: `postgres`
-- Имя базы данных: `transaction_test_case`
-
-5. Примените миграции базы данных с помощью инструмента Goose. Убедитесь, что у вас установлен инструмент Goose. Затем выполните следующую команду в корневой директории проекта:
+4. Примените миграции базы данных с помощью инструмента Goose. Убедитесь, что у вас установлен инструмент Goose. Затем выполните следующую команду в корневой директории проекта:
 
 [source,shell]
 ----
-goose -dir ./migrations postgres "user=postgres password=postgres dbname=transaction_test_case sslmode=disable" up
+goose -dir ./migrations postgres "postgresql://postgres:postgres@localhost:5432/transaction_test_case?sslmode=disable" up
 ----
 
-6. Запустите приложение, используя команду `go run cmd/transaction_test_case/main.go`.
+5. Запустите приложение, используя команду `go run cmd/transaction_test_case/main.go`.
 
-7. Теперь вы можете использовать Swagger для взаимодействия с API приложения. Откройте браузер и перейдите по адресу `http://localhost:8080/swagger/index.html`.
+6. Теперь вы можете использовать Swagger для взаимодействия с API приложения. Откройте браузер и перейдите по адресу `http://localhost:8080/swagger/index.html`.
 
 == API
 
