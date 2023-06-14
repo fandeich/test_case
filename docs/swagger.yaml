@@ -1,0 +1,139 @@
+definitions:
+  domain.Client:
+    properties:
+      balance:
+        type: number
+      createdAt:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  rest.CreateClient:
+    properties:
+      client:
+        $ref: '#/definitions/domain.Client'
+      message:
+        type: string
+    type: object
+  rest.CreateClientRequest:
+    type: object
+  rest.CreateTransactionRequest:
+    properties:
+      amount:
+        type: number
+      client_id:
+        type: string
+    type: object
+  rest.CreateTransactionResponse:
+    properties:
+      amount:
+        type: number
+      client_id:
+        type: string
+      transaction_id:
+        type: string
+    type: object
+  rest.GetBalanceResponse:
+    properties:
+      balance:
+        type: number
+      client_id:
+        type: string
+    type: object
+  rest.GetTransactionResponse:
+    properties:
+      status:
+        type: string
+      transaction_id:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /clients/{id}/balance:
+    post:
+      consumes:
+      - application/json
+      description: Get a client's balance by client's id
+      operationId: get-balance
+      parameters:
+      - description: Client ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.GetBalanceResponse'
+      summary: Get a client's balance
+  /clients/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new client
+      operationId: create-client
+      parameters:
+      - description: Create client
+        in: body
+        name: client
+        required: true
+        schema:
+          $ref: '#/definitions/rest.CreateClientRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.CreateClient'
+      summary: Create a new client
+  /transactions/{id}:
+    post:
+      consumes:
+      - application/json
+      description: Get a transaction's status by transaction id
+      operationId: get-transaction
+      parameters:
+      - description: Transaction ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.GetTransactionResponse'
+      summary: Get a transaction's status
+  /transactions/create:
+    post:
+      consumes:
+      - application/json
+      description: Create a new transaction for a specific client with an amount
+      operationId: create-transaction
+      parameters:
+      - description: Create transaction
+        in: body
+        name: transaction
+        required: true
+        schema:
+          $ref: '#/definitions/rest.CreateTransactionRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/rest.CreateTransactionResponse'
+      summary: Create a new transaction
+swagger: "2.0"
